@@ -1,0 +1,27 @@
+#!/bin/bash
+
+function usage() {
+  echo "Usage: med <edscript> <files> ..."
+  exit 1
+}
+
+EDSCRIPT=$1
+shift
+
+FILES=$@
+
+if [[ -z "$EDSCRIPT" ]]; then
+  echo "Error: must provide ed script"
+  usage
+fi
+
+if [[ -z "$FILES" ]]; then
+  echo "Error: must provide at least one file"
+  usage
+fi
+
+for FILE in $FILES; do
+  echo "Processing $FILE..."
+  cat $EDSCRIPT | ed -s $FILE
+  echo
+done
