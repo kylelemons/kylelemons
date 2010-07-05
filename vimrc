@@ -2,7 +2,7 @@
 """ Basic setup
 set nocompatible          " Don't force VI compatibility when using vi
 "set modelines=5           " Check the first(?) 5* lines of a file for VIM mode commands
-"set modeline              " Enable checking of files for vim modelines (e.g. /* vim: set noai tw=4: */
+"set modeline              " Enable checking of files for vim modelines (e.g. /* vim: set noai sw=4 ts=4 et: */
 
 """ Editing setup
 set autoindent            " Enable automatic indenting where possible
@@ -11,6 +11,8 @@ set linebreak             " Break lines onscreen at sensible places (read: word 
 set whichwrap=bs~<>[]     " Let cursors, backspace, etc to move onto the next or previous line
 set backupdir=~/.vim/bak  " Write backup files to ~/.vim/bak* if it exists
 set showmatch             " Show matches wile searching
+set incsearch             " Search as you type
+set ignorecase            " Ignore case by default when searching
 set hlsearch              " Show other matches after a search (use :set noh to hide them)
 set ruler                 " Show cursor position in the last line
 
@@ -42,6 +44,9 @@ autocmd BufRead,BufNewFile *.go set noet tabstop=4 shiftwidth=4
 highlight TooLongLine ctermbg=red guibg=red
 autocmd BufRead,BufNewFile *.py match TooLongLine /^.\{80,}$/
 autocmd BufRead,BufNewFile *.py set et tabstop=4 shiftwidth=4
+
+" Last position jump
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 """ Command mappings
 " Use ^J to reformat a text paragraph with the current linewidth
